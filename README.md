@@ -1,6 +1,6 @@
 # java-blockgame
 
-**Brick Game (GUI Base) – Version 2**
+**Brick Game (GUI Base) – Version 1.1**
 
 **Updates:**
 
@@ -15,5 +15,6 @@
 	- Blur background while Pause Menu is active.
 
 Still no additional game logic yet.
+
 
 —*Sharif Umar Lu*
