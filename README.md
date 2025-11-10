@@ -1,11 +1,19 @@
-# Brick Game (GUI Base)
+# java-blockgame
 
-This is the first version of our Java Swing brick game.
-It includes:
-- The main game window
-- Platform, bricks, and ball display
-- Timer setup (for animation later)
+**Brick Game (GUI Base) – Version 2**
 
-No game logic yet.
+**Updates:**
 
--Sharif Umar Lu
+- Added a Main Menu
+	- Title
+	- 'Start Game' button
+	- 'Quit' button
+
+- Added a Pause Menu
+	- Menu title
+	- 'Main Menu' button
+	- Blur background while Pause Menu is active.
+
+Still no additional game logic yet.
+
+—*Sharif Umar Lu*
