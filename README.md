@@ -4,12 +4,10 @@
 
 ---
 
-## Version 1.0 – 2025-11-04
-**Author:** Sharif Umar Lu
+**Author:** Stephen Gabrielle David
+## Version 1.2 – 2025-11-15
 **Updates:**
-- Main game window
-- Platform, bricks, and ball display
-- Timer setup (for animation later)
+- Platform movement now follows the cursor
 
 ---
 
@@ -24,9 +22,13 @@
   - Menu title
   - 'Main Menu' button
   - Blur background while Pause Menu is active
-
+  
 ---
-**Author:** Stephen Gabrielle David
-## Version 1.2 – 2025-11-15
+
+## Version 1.0 – 2025-11-04
+**Author:** Sharif Umar Lu
 **Updates:**
-- Platform movement now follows the cursor
+- Main game window
+- Platform, bricks, and ball display
+- Timer setup (for animation later)
+
