@@ -8,7 +8,12 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     private Timer timer;
     private boolean paused = false;
     private PauseMenu pauseMenu;
-
+    private int paddleX = 200;     // start position
+    private int paddleY = 500;     // fixed vertical position
+    private final int paddleWidth = 100;
+    private final int paddleHeight = 15;
+    private int paddleSpeed = 15;  // speed of movement
+    
     public BrickGamePanel(Main mainApp) {
         this.mainApp = mainApp;
         setPreferredSize(new Dimension(500, 600));
@@ -21,6 +26,23 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         addKeyListener(this);
         setFocusable(true);
         requestFocusInWindow();
+
+    addMouseMotionListener(new MouseMotionAdapter() {
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if (paused) return; // <-- prevents movement when paused
+
+        paddleX = e.getX() - (paddleWidth / 2);
+
+        // clamp
+        if (paddleX < 0) paddleX = 0;
+        if (paddleX + paddleWidth > getWidth()) {
+            paddleX = getWidth() - paddleWidth;
+        }
+
+        repaint();
+    }
+});
     }
 
     @Override
@@ -47,9 +69,6 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
 
         //=== PLATFORM ===
         g2.setColor(Color.LIGHT_GRAY);
-        int paddleWidth = 100, paddleHeight = 15;
-        int paddleX = (getWidth() - paddleWidth) / 2;
-        int paddleY = getHeight() - 70;
         g2.fillRoundRect(paddleX, paddleY, paddleWidth, paddleHeight, 10, 10);
 
         //=== BALL ===
@@ -70,6 +89,11 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     public void actionPerformed(ActionEvent e) {
         hueShift += 0.01f;
         if (hueShift > 1f) hueShift = 0f;
+        
+        if (paddleX < 0) paddleX = 0;
+        if (paddleX + paddleWidth > getWidth()) 
+            paddleX = getWidth() - paddleWidth;
+
         repaint();
     }
 
@@ -78,7 +102,9 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
             togglePause();
         }
+     
     }
+    
 
     private void togglePause() {
         paused = !paused;
