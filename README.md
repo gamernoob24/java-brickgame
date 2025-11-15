@@ -4,8 +4,8 @@
 
 ---
 
-**Author:** Stephen Gabrielle David
 ## Version 1.2 – 2025-11-15
+**Author:** Stephen Gabrielle David
 **Updates:**
 - Platform movement now follows the cursor
 
@@ -31,4 +31,5 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
