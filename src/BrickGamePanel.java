@@ -13,6 +13,12 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     private final int paddleWidth = 100;
     private final int paddleHeight = 15;
     private int paddleSpeed = 15;  // speed of movement
+
+    private int ballX = 244;
+    private int ballY = 475;
+    private int ballVelX = 2;
+    private int ballVelY = -3;
+    private final int ballSize = 32;
     
     public BrickGamePanel(Main mainApp) {
         this.mainApp = mainApp;
@@ -73,9 +79,6 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
 
         //=== BALL ===
         g2.setColor(new Color(255, 240, 200));
-        int ballSize = 12;
-        int ballX = getWidth() / 2 - ballSize / 2;
-        int ballY = paddleY - 25;
         g2.fillOval(ballX, ballY, ballSize, ballSize);
 
         //=== DIM BACKGROUND WHEN PAUSED ===
@@ -90,9 +93,24 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         hueShift += 0.01f;
         if (hueShift > 1f) hueShift = 0f;
         
-        if (paddleX < 0) paddleX = 0;
-        if (paddleX + paddleWidth > getWidth()) 
-            paddleX = getWidth() - paddleWidth;
+        // Ball movement
+        ballX += ballVelX;
+        ballY += ballVelY;
+
+        if (ballX <= 0 || ballX >= getWidth() - ballSize) {
+            ballVelX = -ballVelX;
+        }
+        if (ballY <= 0) {
+            ballVelY = -ballVelY;
+        }
+
+        // Paddle collision
+        Rectangle ballRect = new Rectangle(ballX, ballY, ballSize, ballSize);
+        Rectangle paddleRect = new Rectangle(paddleX, paddleY, paddleWidth, paddleHeight);
+
+        if (ballRect.intersects(paddleRect)) {
+            ballVelY = -ballVelY;
+        }
 
         repaint();
     }

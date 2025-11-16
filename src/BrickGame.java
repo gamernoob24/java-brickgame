@@ -8,6 +8,12 @@ public class BrickGame extends JPanel implements ActionListener {
     private float hueShift = 0f; //For dynamic brick colors
     private Timer timer;
 
+    private int ballX = 244;
+    private int ballY = 505;
+    private int ballVelX = 2;
+    private int ballVelY = -3;
+    private final int ballSize = 12;
+
     public BrickGame() {
         setPreferredSize(new Dimension(500, 600)); //Window size
         setBackground(new Color(20, 24, 58)); //Background color
@@ -61,9 +67,6 @@ public class BrickGame extends JPanel implements ActionListener {
 
         //=== BALL ===
         g2.setColor(new Color(255, 240, 200)); // cream
-        int ballSize = 12;
-        int ballX = getWidth() / 2 - ballSize / 2;
-        int ballY = paddleY - 25;
         g2.fillOval(ballX, ballY, ballSize, ballSize);
     }
 
@@ -72,6 +75,18 @@ public class BrickGame extends JPanel implements ActionListener {
         //Slowly change the color every time the timer updates
         hueShift += 0.01f;
         if (hueShift > 1f) hueShift = 0f;
+
+        // Ball movement
+        ballX += ballVelX;
+        ballY += ballVelY;
+
+        if (ballX <= 0 || ballX >= getWidth() - ballSize) {
+            ballVelX = -ballVelX;
+        }
+        if (ballY <= 0) {
+            ballVelY = -ballVelY;
+        }
+
         repaint(); //refresh the screen so the new colors show
     }
 

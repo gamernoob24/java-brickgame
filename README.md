@@ -5,6 +5,13 @@
 ---
 
 ## Version 1.2 – 2025-11-15
+**Author:** Jessie James Gonzales<br>
+**Updates:**
+- Implement ball logic
+
+---
+
+## Version 1.2 – 2025-11-15
 **Author:** Stephen Gabrielle David<br>
 **Updates:**
 - Platform movement now follows the cursor
