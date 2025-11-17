@@ -4,6 +4,14 @@
 
 ---
 
+## Version 1.5 – 2025-11-17
+**Author:** Reanna Quin<br>
+**Updates:**
+- Implemented score tracker
+- Adds 50 to score when brick is broken
+
+---
+
 ## Version 1.4 – 2025-17-15
 **Author:** Jessie James Gonzales<br>
 **Updates:**
@@ -48,3 +56,4 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
