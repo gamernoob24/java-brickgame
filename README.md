@@ -4,9 +4,19 @@
 
 ---
 
-## Version 1.2 – 2025-11-15
+## Version 1.4 – 2025-17-15
 **Author:** Jessie James Gonzales<br>
 **Updates:**
+- Implement Collision logic to bricks
+- Add FPS meter
+- Fix more typos
+
+---
+
+## Version 1.3 – 2025-16-15
+**Author:** Jessie James Gonzales<br>
+**Updates:**
+- Fix typo
 - Implement ball logic
 
 ---
@@ -38,6 +48,3 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
-
-
-

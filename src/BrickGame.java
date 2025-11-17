@@ -18,8 +18,8 @@ public class BrickGame extends JPanel implements ActionListener {
         setPreferredSize(new Dimension(500, 600)); //Window size
         setBackground(new Color(20, 24, 58)); //Background color
 
-        //Timer makes the game update every 50ms so things can move or change
-        timer = new Timer(50, this);
+        //Timer makes the game update every 10ms so things can move or change
+        timer = new Timer(10, this);
         timer.start();
     }
 
