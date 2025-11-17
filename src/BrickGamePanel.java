@@ -8,6 +8,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     private Timer timer;
     private boolean paused = false;
     private PauseMenu pauseMenu;
+    private int score = 0;
     private int paddleX = 200;     // start position
     private int paddleY = 500;     // fixed vertical position
     private final int paddleWidth = 100;
@@ -100,6 +101,9 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         g2.setColor(Color.WHITE);
         g2.drawString("FPS: " + fps, 10, 20);
 
+        // Score
+        g2.drawString("Score: " + score, 400, 20);
+        
         //=== DIM BACKGROUND WHEN PAUSED ===
         if (paused) {
             g2.setColor(new Color(0, 0, 0, 150));
@@ -150,7 +154,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
                     Rectangle brickRect = new Rectangle(brickX, brickY, brickWidth, brickHeight);
                     if (ballRect.intersects(brickRect)) {
                         bricks[row][col] = false;
-
+                        score += 50;
                         Rectangle intersection = ballRect.intersection(brickRect);
                         if (intersection.height > intersection.width) {
                             ballVelX = -ballVelX; // Side collision
@@ -237,3 +241,4 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     @Override public void keyReleased(KeyEvent e) {}
     @Override public void keyTyped(KeyEvent e) {}
 }
+
