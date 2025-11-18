@@ -8,12 +8,14 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     private Timer timer;
     private boolean paused = false;
     private PauseMenu pauseMenu;
+    private GameOverMenu gameOverMenu;
     private int score = 0;
+    private boolean gameOver = false;
     private int paddleX = 200;     // start position
     private int paddleY = 500;     // fixed vertical position
     private final int paddleWidth = 100;
     private final int paddleHeight = 15;
-    private int paddleSpeed = 15;  // speed of movement
+   
 
     private int ballX = 244;
     private int ballY = 475;
@@ -50,8 +52,8 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-            public void mouseMoved(MouseEvent e) {
-                if (paused) return; // <-- prevents movement when paused
+           public void mouseMoved(MouseEvent e) {
+                if (paused || gameOver) return;
 
                 paddleX = e.getX() - (paddleWidth / 2);
 
@@ -145,6 +147,14 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         int totalBricksWidth = columns * (brickWidth + gap) - gap;
         int startX = (getWidth() - totalBricksWidth) / 2, startY = 60;
 
+         // Check if ball fell off the bottom is GAME OVER
+        if (ballY >= getHeight()) {
+            gameOver = true;
+            timer.stop();
+            showGameOverMenu();
+            return;
+        }
+
         brick_collision_detection:
         for (int row = 0; row < rows; row++) {
             for (int col = 0; col < columns; col++) {
@@ -198,11 +208,12 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     }
 
     @Override
-    public void keyPressed(KeyEvent e) {
+   public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-            togglePause();
+            if (!gameOver) {
+                togglePause();
+            }
         }
-
     }
 
 
@@ -236,6 +247,46 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
             repaint();
             requestFocusInWindow();
         }
+    }
+
+     private void showGameOverMenu() {
+        if (gameOverMenu == null) {
+            gameOverMenu = new GameOverMenu(this, mainApp, score);
+            int w = 400, h = 300;
+            gameOverMenu.setBounds((getWidth() - w) / 2, (getHeight() - h) / 2, w, h);
+            add(gameOverMenu, Integer.valueOf(2)); // top layer
+            gameOverMenu.setVisible(true);
+            repaint();
+        }
+    }
+
+     public void restartGame() {
+        // Remove game over menu
+        if (gameOverMenu != null) {
+            remove(gameOverMenu);
+            gameOverMenu = null;
+        }
+
+          // Reset game state
+        gameOver = false;
+        score = 0;
+        paddleX = 200;
+        ballX = 244;
+        ballY = 475;
+        ballVelX = 2;
+        ballVelY = -3;
+
+        // Reset bricks
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < columns; col++) {
+                bricks[row][col] = true;
+            }
+        }
+
+        // Restart timer
+        timer.start();
+        requestFocusInWindow();
+        repaint();
     }
 
     @Override public void keyReleased(KeyEvent e) {}
