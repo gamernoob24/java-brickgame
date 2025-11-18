@@ -2,6 +2,16 @@
 
 **Brick Game (GUI Base)**
 
+
+
+---
+
+## Version 1.6 – 2025-11-17
+**Author:** Stephen Gabrielle David<br>
+**Updates:**
+- Paddle movement
+- Game over panel
+
 ---
 
 ## Version 1.5 – 2025-11-17
@@ -12,7 +22,7 @@
 
 ---
 
-## Version 1.4 – 2025-17-15
+## Version 1.4 – 2025-11-17
 **Author:** Jessie James Gonzales<br>
 **Updates:**
 - Implement Collision logic to bricks
@@ -21,7 +31,7 @@
 
 ---
 
-## Version 1.3 – 2025-16-15
+## Version 1.3 – 2025-11-16
 **Author:** Jessie James Gonzales<br>
 **Updates:**
 - Fix typo
