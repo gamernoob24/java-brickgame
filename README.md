@@ -6,6 +6,18 @@
 
 ---
 
+## Version 1.7 – 2025-11-25
+**Author:** Roni Bauzon<br>
+**Updates:**
+- Added modifiers (some are powerups, others are debuffs):
+    - Point multipliers (×0.5, x2, x4)
+    - Ball speed modifiers (×0.5, x1.5, x2)
+    - Paddle size modifiers (×0.5, x1.5, x2)
+    - Extra balls (+1, +2, +3)
+- Added alternate Game Win panel once every brick is destroyed
+
+---
+
 ## Version 1.6 – 2025-11-17
 **Author:** Stephen Gabrielle David<br>
 **Updates:**
@@ -66,4 +78,5 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
