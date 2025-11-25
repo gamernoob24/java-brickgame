@@ -5,14 +5,15 @@ import java.awt.event.ActionEvent;
 public class GameOverMenu extends JPanel {
     private float hueShift = 0f;
     private int finalScore;
+    private boolean isWin;
 
-    public GameOverMenu(BrickGamePanel gamePanel, Main mainApp, int finalScore) {
+    public GameOverMenu(BrickGamePanel gamePanel, Main mainApp, int finalScore, boolean isWin) {
         this.finalScore = finalScore;
+        this.isWin = isWin;
         setOpaque(true);
         setBackground(new Color(25, 25, 50, 240));
         setLayout(null);
 
-        // Try again button
         JButton tryAgainButton = createStyledButton("TRY AGAIN");
         tryAgainButton.setBounds(100, 180, 200, 50);
         tryAgainButton.addActionListener((ActionEvent e) -> {
@@ -20,16 +21,13 @@ public class GameOverMenu extends JPanel {
         });
         add(tryAgainButton);
 
-        // main menu button
         JButton mainMenuButton = createStyledButton("MAIN MENU");
-        
         mainMenuButton.setBounds(100, 240, 200, 50);
         mainMenuButton.addActionListener((ActionEvent e) -> {
             mainApp.showMainMenu();
         });
         add(mainMenuButton);
 
-        // Timer for color cycling animation
         Timer timer = new Timer(50, e -> {
             hueShift += 0.01f;
             if (hueShift > 1f) hueShift = 0f;
@@ -44,16 +42,14 @@ public class GameOverMenu extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        // Game over title
         float hue = hueShift % 1f;
         g2.setColor(Color.getHSBColor(hue, 0.8f, 1f));
         g2.setFont(new Font("Impact", Font.BOLD, 42));
-        String title = "GAME OVER";
+        String title = isWin ? "YOU WIN" : "GAME OVER";
         FontMetrics fm = g2.getFontMetrics();
         int x = (getWidth() - fm.stringWidth(title)) / 2;
         g2.drawString(title, x, 70);
 
-        // Final Score
         g2.setColor(Color.WHITE);
         g2.setFont(new Font("Impact", Font.PLAIN, 24));
         String scoreText = "Final Score: " + getScore();
@@ -63,7 +59,6 @@ public class GameOverMenu extends JPanel {
     }
 
     private int getScore() {
-        // Return the final score passed through the constructor
         return finalScore;
     }
 
