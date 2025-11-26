@@ -6,6 +6,14 @@
 
 ---
 
+## Version 1.8 – 2025-11-26
+**Author:** Reanna Quin<br>
+**Updates:**
+- Added scores to powerups
+- Adjusted ball speed
+
+---
+
 ## Version 1.7 – 2025-11-25
 **Author:** Roni Bauzon<br>
 **Updates:**

@@ -103,7 +103,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
 
         // initial ball
         balls.clear();
-        balls.add(new Ball(244, 475, 2, -3, ballSize, true));
+        balls.add(new Ball(244, 475, 5, -3, ballSize, true));
 
         timer = new Timer(16, this); // ~60 FPS
         timer.start();
@@ -357,6 +357,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         modifierActive = true;
         activeModifierDef = def;
         modifierEndTime = System.currentTimeMillis() + 10_000L;
+        score += 100;
         switch (def.category) {
             case POINT:
                 pointMultiplier = def.value;
@@ -500,7 +501,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         bricksDestroyedCounter = 0;
         addedBalls.clear();
         balls.clear();
-        balls.add(new Ball(244, 475, 2, -3, ballSize, true));
+        balls.add(new Ball(244, 475, 5, -3, ballSize, true));
 
         // Reset bricks
         for (int row = 0; row < rows; row++) {
