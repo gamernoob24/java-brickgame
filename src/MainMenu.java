@@ -74,7 +74,7 @@ public class MainMenu extends JPanel implements ActionListener {
         float hue = hueShift % 1f;
         g2.setColor(Color.getHSBColor(hue, 0.8f, 1f));
         g2.setFont(new Font("Impact", Font.BOLD, 32)); // Titles bold
-        String title = "JAVA BRICK GAME";
+        String title = "BRICK BATTLE ROYALE 2D";
         int width = g2.getFontMetrics().stringWidth(title);
         g2.drawString(title, (getWidth() - width) / 2, 120);
     }

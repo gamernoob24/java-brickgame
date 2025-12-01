@@ -4,6 +4,14 @@
 
 ---
 
+## Version 1.11 – 2025-12-1
+**Author:** Reanna Quin<br>
+**Updates:**
+- changed title on JFrame
+- changed title on MainMenu
+
+---
+
 ## Version 1.10 – 2025-12-1
 **Author:** Jessie James Gonzales<br>
 **Updates:**
