@@ -18,6 +18,7 @@
 **Author:** Stephen David<br>
 **Updates:**
 - Added Fullscreen option
+- Make the game cover the whole screen when use fullscreen option
 
 ---
 
@@ -101,6 +102,7 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
 
 
