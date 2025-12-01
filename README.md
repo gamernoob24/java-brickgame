@@ -4,7 +4,7 @@
 
 ---
 
-## Version 1.8 – 2025-12-1
+## Version 1.9 – 2025-12-1
 **Author:** Stephen David<br>
 **Updates:**
 - Added Fullscreen opition
@@ -91,6 +91,7 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
 
 
