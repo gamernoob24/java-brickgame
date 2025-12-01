@@ -7,6 +7,7 @@ public class MainMenu extends JPanel implements ActionListener {
     private final Main mainApp;
     private final JButton startButton, quitButton;
     private float hueShift = 0f;
+    private final Timer animationTimer;
 
     public MainMenu(Main mainApp) {
         this.mainApp = mainApp;
@@ -29,12 +30,16 @@ public class MainMenu extends JPanel implements ActionListener {
         quitButton.addActionListener(this);
 
         // Animate title
-        Timer timer = new Timer(50, e -> {
+        animationTimer = new Timer(50, e -> {
             hueShift += 0.01f;
             if (hueShift > 1f) hueShift = 0f;
             repaint();
         });
-        timer.start();
+        animationTimer.start();
+    }
+
+    public void stopTimer() {
+        animationTimer.stop();
     }
 
     private JButton createButton(String text) {

@@ -90,7 +90,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
                 new ModifierDef(ModCategory.MULTIBALL, 3.0, "+3 BALLS")
         };
 
-        setPreferredSize(new Dimension(500, 600));
+        
         setBackground(new Color(20, 24, 58));
         setLayout(null); // absolute positioning for overlay
 
@@ -130,76 +130,87 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         });
     }
 
+    public void stopTimer() {
+        timer.stop();
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        Graphics2D g2 = (Graphics2D) g;
-        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+    super.paintComponent(g);
+    Graphics2D g2 = (Graphics2D) g;
+    g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-        //=== BRICKS ===
-        int brickWidth = 50, brickHeight = 20, gap = 6;
-        int totalBricksWidth = columns * (brickWidth + gap) - gap;
-        int startX = (getWidth() - totalBricksWidth) / 2, startY = 60;
+    // Calculate scaling based on current panel size
+    int panelWidth = getWidth();
+    int panelHeight = getHeight();
+    
+    //=== BRICKS ===
+    int brickWidth = panelWidth / 10;  // Dynamically scale brick width
+    int brickHeight = panelHeight / 30; // Dynamically scale brick height
+    int gap = Math.max(4, panelWidth / 100); // Scale gap too
+    int totalBricksWidth = columns * (brickWidth + gap) - gap;
+    int startX = (panelWidth - totalBricksWidth) / 2;
+    int startY = panelHeight / 10; // Start bricks at 10% from top
 
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < columns; col++) {
-                if (bricks[row][col]) {
-                    float hue = (hueShift + (row * 0.1f) + (col * 0.02f)) % 1f;
-                    g2.setColor(Color.getHSBColor(hue, 0.7f, 1.0f));
-                    int x = startX + col * (brickWidth + gap);
-                    int y = startY + row * (brickHeight + gap);
-                    g2.fillRect(x, y, brickWidth, brickHeight);
-                }
+    for (int row = 0; row < rows; row++) {
+        for (int col = 0; col < columns; col++) {
+            if (bricks[row][col]) {
+                float hue = (hueShift + (row * 0.1f) + (col * 0.02f)) % 1f;
+                g2.setColor(Color.getHSBColor(hue, 0.7f, 1.0f));
+                int x = startX + col * (brickWidth + gap);
+                int y = startY + row * (brickHeight + gap);
+                g2.fillRect(x, y, brickWidth, brickHeight);
             }
         }
-
-        //=== PLATFORM ===
-        g2.setColor(Color.LIGHT_GRAY);
-        g2.fillRoundRect(paddleX, paddleY, paddleWidth, paddleHeight, 10, 10);
-
-        //=== BALLS ===
-        g2.setColor(new Color(255, 255, 200));
-        for (Ball b : balls) {
-            g2.fillOval((int)b.x, (int)b.y, b.size, b.size);
-        }
-
-        //=== FALLING MODIFIER ===
-        if (fallingModifier != null) {
-            g2.setColor(new Color(200, 200, 255));
-            g2.fillRect(fallingModifier.x, fallingModifier.y, fallingModifier.w, fallingModifier.h);
-            g2.setColor(Color.BLACK);
-            g2.setFont(new Font("Impact", Font.PLAIN, 18));
-            FontMetrics fm = g2.getFontMetrics();
-            String q = "?";
-            int tx = fallingModifier.x + (fallingModifier.w - fm.stringWidth(q)) / 2;
-            int ty = fallingModifier.y + (fallingModifier.h + fm.getAscent()) / 2 - 3;
-            g2.drawString(q, tx, ty);
-        }
-
-        // FPS Counter
-        g2.setColor(Color.WHITE);
-        g2.drawString("FPS: " + fps, 10, 20);
-
-        // Score
-        g2.drawString("Score: " + score, 400, 20);
-
-        // Active modifier display
-        if (modifierActive && activeModifierDef != null) {
-            long remainingMs = modifierEndTime - System.currentTimeMillis();
-            long remainingSec = Math.max(0, (remainingMs + 999) / 1000);
-            String txt = activeModifierDef.display + " - " + remainingSec + "S REMAINING";
-            FontMetrics fm = g2.getFontMetrics();
-            int tw = fm.stringWidth(txt);
-            g2.setColor(Color.WHITE);
-            g2.drawString(txt, (getWidth() - tw) / 2, 20);
-        }
-
-        //=== DIM BACKGROUND WHEN PAUSED ===
-        if (paused) {
-            g2.setColor(new Color(0, 0, 0, 150));
-            g2.fillRect(0, 0, getWidth(), getHeight());
-        }
     }
+
+    //=== PLATFORM (PADDLE) ===
+    g2.setColor(Color.LIGHT_GRAY);
+    g2.fillRoundRect(paddleX, paddleY, paddleWidth, paddleHeight, 10, 10);
+
+    //=== BALLS ===
+    g2.setColor(new Color(255, 255, 200));
+    for (Ball b : balls) {
+        g2.fillOval((int)b.x, (int)b.y, b.size, b.size);
+    }
+
+    //=== FALLING MODIFIER ===
+    if (fallingModifier != null) {
+        g2.setColor(new Color(200, 200, 255));
+        g2.fillRect(fallingModifier.x, fallingModifier.y, fallingModifier.w, fallingModifier.h);
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font("Impact", Font.PLAIN, 18));
+        FontMetrics fm = g2.getFontMetrics();
+        String q = "?";
+        int tx = fallingModifier.x + (fallingModifier.w - fm.stringWidth(q)) / 2;
+        int ty = fallingModifier.y + (fallingModifier.h + fm.getAscent()) / 2 - 3;
+        g2.drawString(q, tx, ty);
+    }
+
+    // FPS Counter
+    g2.setColor(Color.WHITE);
+    g2.drawString("FPS: " + fps, 10, 20);
+
+    // Score
+    g2.drawString("Score: " + score, panelWidth - 120, 20);
+
+    // Active modifier display
+    if (modifierActive && activeModifierDef != null) {
+        long remainingMs = modifierEndTime - System.currentTimeMillis();
+        long remainingSec = Math.max(0, (remainingMs + 999) / 1000);
+        String txt = activeModifierDef.display + " - " + remainingSec + "S REMAINING";
+        FontMetrics fm = g2.getFontMetrics();
+        int tw = fm.stringWidth(txt);
+        g2.setColor(Color.WHITE);
+        g2.drawString(txt, (panelWidth - tw) / 2, 40);
+    }
+
+    //=== DIM BACKGROUND WHEN PAUSED ===
+    if (paused) {
+        g2.setColor(new Color(0, 0, 0, 150));
+        g2.fillRect(0, 0, panelWidth, panelHeight);
+    }
+}
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -244,10 +255,14 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         }
 
         // Brick collision
-        int brickWidth = 50, brickHeight = 20, gap = 6;
+        int panelWidth = getWidth();
+        int panelHeight = getHeight();
+        int brickWidth = panelWidth / 10;
+        int brickHeight = panelHeight / 30;
+        int gap = Math.max(4, panelWidth / 100);
         int totalBricksWidth = columns * (brickWidth + gap) - gap;
-        int startX = (getWidth() - totalBricksWidth) / 2, startY = 60;
-
+        int startX = (panelWidth - totalBricksWidth) / 2;
+        int startY = panelHeight / 10;
         boolean anyBrickLeft = false;
 
         for (Ball b : new ArrayList<>(balls)) {
@@ -415,7 +430,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
                         balls.remove(b);
                     }
                     addedBalls.clear();
-                    addedBallsCount = 0;
+                      addedBallsCount = 0;
                     break;
             }
         }

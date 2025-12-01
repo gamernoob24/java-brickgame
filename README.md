@@ -4,10 +4,20 @@
 
 ---
 
+## Version 1.10 – 2025-12-1
+**Author:** Jessie James Gonzales<br>
+**Updates:**
+- Implement sound
+- add Background music
+- Revert Fullscreen option
+- fix typos
+
+---
+
 ## Version 1.9 – 2025-12-1
 **Author:** Stephen David<br>
 **Updates:**
-- Added Fullscreen opition
+- Added Fullscreen option
 
 ---
 

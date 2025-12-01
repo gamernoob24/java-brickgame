@@ -1,9 +1,10 @@
 import javax.swing.*;
 
 public class Main {
-    private JFrame window;
+    private final JFrame window;
     private MainMenu mainMenu;
     private BrickGamePanel gamePanel;
+    private final AudioPlayer audioPlayer;
 
     public Main() {
         window = new JFrame("Java Brick Game");
@@ -12,24 +13,40 @@ public class Main {
         window.setResizable(false);
         window.setLocationRelativeTo(null);
 
+        audioPlayer = new AudioPlayer();
+        audioPlayer.playMusic("background.wav");
+
         showMainMenu();
         window.setVisible(true);
     }
 
     public void showMainMenu() {
-        if (gamePanel != null) window.remove(gamePanel);
+        if (gamePanel != null) {
+            gamePanel.stopTimer(); // Stop game timer
+            window.remove(gamePanel);
+            gamePanel = null;
+        }
         mainMenu = new MainMenu(this);
         window.setContentPane(mainMenu);
         window.revalidate();
         window.repaint();
+        mainMenu.requestFocusInWindow();
     }
 
     public void startGame() {
-        window.remove(mainMenu);
+        if (mainMenu != null) {
+            mainMenu.stopTimer(); // Stop menu timer
+            window.remove(mainMenu);
+            mainMenu = null;
+        }
         gamePanel = new BrickGamePanel(this);
         window.setContentPane(gamePanel);
         window.revalidate();
         gamePanel.requestFocusInWindow();
+    }
+
+    public void playSound(String soundFile) {
+        audioPlayer.playSound(soundFile);
     }
 
     public static void main(String[] args) {
