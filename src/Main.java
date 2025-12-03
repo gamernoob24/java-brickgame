@@ -10,7 +10,7 @@ public class Main {
         window = new JFrame("Brick Battle Royale 2D");
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setSize(500, 600);
-        window.setResizable(false);
+        window.setResizable(true);
         window.setLocationRelativeTo(null);
 
         audioPlayer = new AudioPlayer();
