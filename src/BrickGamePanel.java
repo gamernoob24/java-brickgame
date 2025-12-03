@@ -16,11 +16,11 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
     private GameOverMenu gameWonMenu;
     private int score = 0;
     private boolean gameOver = false;
-    private int paddleX = 200;     // start position
-    private int paddleY = 500;     // fixed vertical position
-    private final int paddleHeight = 15;
+    private int paddleX = 200;
+    private int paddleY = 500;  
+    private int paddleHeight = 15;  
     private int paddleWidth = 100;
-    private final int originalPaddleWidth = 100;
+    private double paddleWidthScale = 1.0; 
 
     private final int ballSize = 24;
 
@@ -114,19 +114,21 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
 
         addMouseMotionListener(new MouseMotionAdapter() {
             @Override
-            public void mouseMoved(MouseEvent e) {
-                if (paused || gameOver) return;
+        public void mouseMoved(MouseEvent e) {
+        if (paused || gameOver) return;
 
-                paddleX = e.getX() - (paddleWidth / 2);
+        int dynamicPaddleWidth = Math.max(50, getWidth() / 8);
+        dynamicPaddleWidth = (int)(dynamicPaddleWidth * paddleWidthScale);
 
-                // clamp
-                if (paddleX < 0) paddleX = 0;
-                if (paddleX + paddleWidth > getWidth()) {
-                    paddleX = getWidth() - paddleWidth;
-                }
+        paddleX = e.getX() - (dynamicPaddleWidth / 2);
 
-                repaint();
-            }
+        if (paddleX < 0) paddleX = 0;
+        if (paddleX + dynamicPaddleWidth > getWidth()) {
+            paddleX = getWidth() - dynamicPaddleWidth;
+        }
+
+        repaint();
+    }
         });
     }
 
@@ -164,9 +166,15 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         }
     }
 
-    //=== PLATFORM (PADDLE) ===
+    
+    //=== PLATFORM ===
+    int dynamicPaddleY = (int)(panelHeight * 0.85);
+    int dynamicPaddleWidth = Math.max(50, panelWidth / 8);
+    int dynamicPaddleHeight = Math.max(10, panelHeight / 40);
+    dynamicPaddleWidth = (int)(dynamicPaddleWidth * paddleWidthScale);
+
     g2.setColor(Color.LIGHT_GRAY);
-    g2.fillRoundRect(paddleX, paddleY, paddleWidth, paddleHeight, 10, 10);
+    g2.fillRoundRect(paddleX, dynamicPaddleY, dynamicPaddleWidth, dynamicPaddleHeight, 10, 10);
 
     //=== BALLS ===
     g2.setColor(new Color(255, 255, 200));
@@ -313,7 +321,13 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         }
 
         // Paddle collision
-        Rectangle paddleRect = new Rectangle(paddleX, paddleY, paddleWidth, paddleHeight);
+       
+        int dynamicPaddleY = (int)(getHeight() * 0.85);
+        int dynamicPaddleWidth = Math.max(50, getWidth() / 8);
+        int dynamicPaddleHeight = Math.max(10, getHeight() / 40);
+        dynamicPaddleWidth = (int)(dynamicPaddleWidth * paddleWidthScale);
+
+        Rectangle paddleRect = new Rectangle(paddleX, dynamicPaddleY, dynamicPaddleWidth, dynamicPaddleHeight);
 
         for (Ball b : balls) {
             Rectangle ballRect = new Rectangle((int)b.x, (int)b.y, b.size, b.size);
@@ -385,9 +399,9 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
                 }
                 speedMultiplier = factor;
                 break;
-            case PADDLE:
-                paddleWidth = Math.max(20, (int)(originalPaddleWidth * def.value));
-                break;
+           case PADDLE:
+            paddleWidthScale = def.value;
+            break;
             case MULTIBALL:
                 int add = (int)def.value;
                 addedBallsCount = add;
@@ -422,9 +436,9 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
                     }
                     speedMultiplier = 1.0;
                     break;
-                case PADDLE:
-                    paddleWidth = originalPaddleWidth;
-                    break;
+               case PADDLE:
+                paddleWidthScale = 1.0;
+                break;
                 case MULTIBALL:
                     for (Ball b : new ArrayList<>(addedBalls)) {
                         balls.remove(b);
@@ -506,7 +520,7 @@ public class BrickGamePanel extends JPanel implements ActionListener, KeyListene
         gameOver = false;
         score = 0;
         paddleX = 200;
-        paddleWidth = originalPaddleWidth;
+        paddleWidthScale = 1.0;
         pointMultiplier = 1.0;
         speedMultiplier = 1.0;
         activeModifierDef = null;
