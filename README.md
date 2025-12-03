@@ -4,10 +4,12 @@
 
 ---
 
-## Version 1.11 – 2025-12-1
+## Version 1.12 – 2025-12-3
 **Author:** Jessie James Gonzales<br>
 **Updates:**
-- update README.md to reflect the new title name 
+- update README.md to reflect the new title name
+- fix typo
+- implement resizeable window(from Stephen David)
 
 ---
 
@@ -117,6 +119,7 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
 
 
