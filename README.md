@@ -34,8 +34,7 @@
 ## Version 1.9 – 2025-12-1
 **Author:** Stephen David<br>
 **Updates:**
-- Added Fullscreen option
-- Make the game cover the whole screen when use fullscreen option
+- Make the game cover or scale the whole screen when use fullscreen option
 
 ---
 
@@ -119,6 +118,7 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
 
 
