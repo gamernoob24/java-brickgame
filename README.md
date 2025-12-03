@@ -1,6 +1,13 @@
-# java-blockgame
+# java 'Brick Battle Royale 2D'
 
 **Brick Game (GUI Base)**
+
+---
+
+## Version 1.11 – 2025-12-1
+**Author:** Jessie James Gonzales<br>
+**Updates:**
+- update README.md to reflect the new title name 
 
 ---
 
@@ -110,6 +117,7 @@
 - Main game window
 - Platform, bricks, and ball display
 - Timer setup (for animation later)
+
 
 
 
